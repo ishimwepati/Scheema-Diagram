@@ -36,3 +36,13 @@ CREATE TABLE invoice_items (
     invoice_id int REFERENCES invoices(id),
     treatment_id int REFERENCES treatment(medical_history_id) -- Corrected reference to medical_history_id
 );
+
+CREATE TABLE treatment_history (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    medical_history_id INT,
+    treatment_id INT,
+    FOREIGN KEY (medical_history_id)
+    REFERENCES medical_histories(id),
+    FOREIGN KEY (treatment_id)
+    REFERENCES treatment(id)
+)
