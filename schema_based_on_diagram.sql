@@ -1,48 +1,61 @@
 /* Database schema_based_on_diagram to keep the structure of entire database. */
 
 CREATE TABLE patients (
-    id serial PRIMARY KEY,
+    id int GENERATED ALWAYS AS IDENTITY,
     name varchar(255),
-    date_of_birth date
+    date_of_birth date,
+    PRIMARY KEY (id)
 );
 
-/* Creating a medical_histories table */
 CREATE TABLE medical_histories (
-    id serial PRIMARY KEY,
+    id int GENERATED ALWAYS AS IDENTITY,
     admitted_at timestamp,
-    patient_id int REFERENCES patients(id),
-    status varchar(255)
+    patient_id int,
+    FOREIGN KEY (patient_id)
+    REFERENCES patients(id),
+    status varchar(255),
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE invoices (
-    id serial PRIMARY KEY,
+    id int GENERATED ALWAYS AS IDENTITY,
     total_amount decimal,
     generated_at timestamp,
     payed_at timestamp,
-    medical_history_id int REFERENCES medical_histories(id)
+    medical_history_id int,
+    FOREIGN KEY (medical_history_id)
+    REFERENCES medical_histories(id),
+    PRIMARY KEY (id)
 );
 
-CREATE TABLE treatment (
-    medical_history_id int PRIMARY KEY REFERENCES medical_histories(id),
+CREATE TABLE treatments (
+    id int GENERATED ALWAYS AS IDENTITY,
     type varchar(255),
-    name varchar(255)
+    name varchar(255),
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE invoice_items (
-    id serial PRIMARY KEY,
+    id int GENERATED ALWAYS AS IDENTITY,
     unit_price decimal,
     quantity int,
     total_price decimal,
-    invoice_id int REFERENCES invoices(id),
-    treatment_id int REFERENCES treatment(medical_history_id) -- Corrected reference to medical_history_id
+    invoice_id int,
+    treatment_id int,
+    FOREIGN KEY (invoice_id)
+    REFERENCES invoices(id),
+    FOREIGN KEY (treatment_id)
+    REFERENCES treatments (id),
+    PRIMARY KEY (id)
 );
 
-CREATE TABLE treatment_history (
+CREATE TABLE treatments_history (
     id INT GENERATED ALWAYS AS IDENTITY,
     medical_history_id INT,
     treatment_id INT,
     FOREIGN KEY (medical_history_id)
     REFERENCES medical_histories(id),
     FOREIGN KEY (treatment_id)
-    REFERENCES treatment(id)
-)
+    REFERENCES treatments(id),
+    PRIMARY KEY (id)
+);
