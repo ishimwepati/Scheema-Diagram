@@ -97,7 +97,7 @@ To run the project, execute the following command:
 ## 👥 Authors <a name="authors"></a>
 
 
-👤 **Ian Kiema**
+👤 **Ishimwe Joseph**
 
 - GitHub: [@githubhandle](https://github.com/ishimwepati)
 - Twitter: [@twitterhandle](https://twitter.com/Patientmusafir1)
